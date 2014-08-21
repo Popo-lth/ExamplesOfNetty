@@ -1,0 +1,30 @@
+# 此为注释 – 将被 Git 忽略
+# 忽略所有 .class 结尾的文件
+*.class
+
+# 但 lib.a 除外
+#!lib.a
+
+# 忽略 xxx/ 目录下的所有文件
+build/
+bin/
+lib/
+other/
+unittest/
+target/
+log/
+logs/
+
+# 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
+doc/*.txt
+
+# ignore all .txt files in the doc/ directory
+doc/**/*.txt
+
+# 忽略一些隐藏文件
+.classpath
+.project
+.settings/
+.svn/
+
+coverage.xml
