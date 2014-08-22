@@ -29,28 +29,35 @@ import java.util.logging.Logger;
 public class TimeClientHandler extends ChannelHandlerAdapter {
 
     private static final Logger logger = Logger.getLogger(TimeClientHandler.class.getName());
-    private final ByteBuf firstMessage;
+    
+    private int counter;
+    private byte[] req;
     
     public TimeClientHandler() {
-        // TODO Auto-generated constructor stub
-        byte [] req = "QUERY TIME ORDEY".getBytes();
-        firstMessage = Unpooled.buffer(req.length);
-        firstMessage.writeBytes(req);
+        req = ("QUERY TIME ORDEY" + System.getProperty("line.separator")).getBytes();
     }
     
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        ctx.writeAndFlush(firstMessage);
+        ByteBuf message = null;
+        int length = req.length;
+        for (int i = 0; i < 100; ++i) {
+            message = Unpooled.buffer(length);
+            message.writeBytes(req);
+            ctx.writeAndFlush(message);
+        }
+
     }
     
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg)
             throws Exception {
-        ByteBuf buf = (ByteBuf) msg;
-        byte [] req = new byte[buf.readableBytes()];
-        buf.readBytes(req);
-        String body = new String(req, "UTF-8");
-        System.out.println("Now is : " + body);
+//        ByteBuf buf = (ByteBuf) msg;
+//        byte [] req = new byte[buf.readableBytes()];
+//        buf.readBytes(req);
+//        String body = new String(req, "UTF-8");
+        String body = (String) msg;
+        System.out.println("Now is : " + body + " ; the counter is : " + ++counter);
     }
     
     @Override
