@@ -58,7 +58,7 @@ public class TimeClient {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         int port = 8080;
         if (args != null && args.length > 0) {
             try {
@@ -68,7 +68,7 @@ public class TimeClient {
             }
         }
         
-        new TimeClient();
+        new TimeClient().connect(port, "127.0.0.1");
     }
 
 }
